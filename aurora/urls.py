@@ -4,12 +4,14 @@ from django.conf.urls import patterns, include, url
 from django.contrib import admin
 admin.autodiscover()
 
+from accounts.views import login 
+
 urlpatterns = patterns('',
     # Examples:
     url(r'^$', 'main.views.home', name='home'),
     # url(r'^aurora/', include('aurora.foo.urls')),
 
-    url(r'^login/$', 'accounts.views.login', name='login'),
+    url(r'^login/$', login.as_view(), name='login'),
     url(r'^logout/$', 'django.contrib.auth.views.logout', {'next_page': 'home'}),
     #TODO: Do a signup view
 

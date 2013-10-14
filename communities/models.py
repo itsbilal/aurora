@@ -6,8 +6,10 @@ class Community(models.Model):
     owner = models.ForeignKey(User)
 
     title       = models.CharField(max_length=100)
-    location    = models.CharField(max_length=50)
+    slogan      = models.CharField(max_length=140)
+    description = models.TextField()
 
+    location    = models.CharField(max_length=50)
     loc_lat     = models.DecimalField(decimal_places=7, blank=True)
     loc_long    = models.DecimalField(decimal_places=7, blank=True)
 

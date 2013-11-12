@@ -5,6 +5,7 @@ from django.contrib import admin
 admin.autodiscover()
 
 from accounts.views import login 
+from communities.views import new as communities_new, enroll as communities_enroll
 
 urlpatterns = patterns('',
     # Examples:
@@ -16,9 +17,9 @@ urlpatterns = patterns('',
     #TODO: Do a signup view
 
     url(r'^communities/$', 'communities.views.list', name="communities_list"),
-    url(r'^communities/new/$', 'communities.views.new', name="communities_new"),
+    url(r'^communities/new/$', communities_new.as_view(), name="communities_new"),
     url(r'^communities/(?P<id\d+>/$', 'communities.views.details', name='communities_details'),
-    url(r'^communities/(?P<id\d+>/enroll/$', 'communities.views.enroll', name='communities_enroll'),
+    url(r'^communities/(?P<id\d+>/enroll/$', communities_enroll.as_view(), name='communities_enroll'),
     url(r'^communities/(?P<id\d+>/manage/$', 'communities.views.manage', name='communities_manage'),
 
 

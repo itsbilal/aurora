@@ -1,6 +1,6 @@
 {% extends base.html %}
 
-{% block title %}Communities around you {% endblock %}
+{% block title %}Communities around you{% endblock %}
 
 {% block body %}
 
@@ -24,5 +24,9 @@
     {% endfor %}
 
 </table>
+
+<br><br>
+
+<a href={% url communities_new %}>New community</a>
 
 {% endblock %}

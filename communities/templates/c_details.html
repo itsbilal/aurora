@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+{% block title %} {{ community.title }} {% endblock %}
+
+{% block body %}
+
+<h3> {{community.title}} </h3>
+<br>
+<h4> {{community.slogan}} </h4>
+
+<br><br>
+
+<a href="{% url communities_enroll id=community.id %}">Join this group</a>
+
+<table>
+<tr>
+	<td>Description:</td>
+	<td>{{community.description}}</td>
+</tr>
+
+<tr>
+	<td>Location</td>
+	<td>{{community.location}}</td>
+</tr>
+
+<tr>
+	<td>Cost</td>
+	<td>{% if community.cost == 0 %} Free
+	{% else %} {{community.cost}} {% endif %}</td>
+</tr>
+
+</table>
+
+{% endblock %}

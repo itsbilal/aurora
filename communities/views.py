@@ -15,7 +15,7 @@ def list(request):
     else:
         communities = Community.objects.all()
 
-    return render(this, "c_list.html", {"communities":communities})
+    return render(request, "c_list.html", {"communities":communities})
 
 class new(View):
     def get(self, request, invalid=False):
@@ -23,7 +23,7 @@ class new(View):
             return HttpResponseForbidden()
 
         form = NewCommunityForm()
-        return render(this, "c_new.html", {"form":form})
+        return render(request, "c_new.html", {"form":form, "invalid": invalid})
 
     def post(self, request):
         if not request.user.is_authenticated():
@@ -39,14 +39,14 @@ class new(View):
             community.description= form.cleaned_data["description"]
 
             community.save()
-            return HttpResponseRedirect(reverse("communities_details", args=(community.id,))
+            return HttpResponseRedirect(reverse("communities_details", args=(community.id,)))
         else:
             return get(request, invalid=True)
 
 def details(request, id):
     community = get_object_or_404(Community, id=id)
 
-    return render(this, "c_details.html", {"community":community}
+    return render(request, "c_details.html", {"community":community})
 
 class enroll(View):
     def get(self, request, id):
@@ -54,7 +54,7 @@ class enroll(View):
             return HttpResponseForbidden()
 
         community = get_object_or_404(Community, id=id)
-        return render(this, "c_enroll.html", {"community":community})
+        return render(request, "c_enroll.html", {"community":community})
 
     def post(self, request, id):
         if not request.user.is_authenticated():
@@ -64,9 +64,24 @@ class enroll(View):
         membership = Membership(community=community)
         membership.member = request.user
 
-        membership.save()
+        if request.POST["enroll"] == True:
+            membership.save()
 
-        return HttpResponseRedirect(reverse("communities_details", args=(id,))
+        return HttpResponseRedirect(reverse("communities_details", args=(id,)))
 
 def manage(request, id):
-    # TODO
+    
+    community = get_object_or_404(Community, id=id)
+    if request.method == 'GET':
+        form = NewCommunityForm(instance=community)
+
+        return render(request, "c_manage.html", {"community":community, "form":form, "invalid":False})
+    else:
+        form = NewCommunityForm(request.POST, instance=community)
+        if form.is_valid():
+            form.save()
+
+            return HttpResponseRedirect(reverse("communities_details", args=(id,)))
+        else:
+            return render(request, "c_manage.html", {"community":community, "form":form, "invalid":True})
+

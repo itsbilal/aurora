@@ -18,9 +18,9 @@ urlpatterns = patterns('',
 
     url(r'^communities/$', 'communities.views.list', name="communities_list"),
     url(r'^communities/new/$', communities_new.as_view(), name="communities_new"),
-    url(r'^communities/(?P<id\d+>/$', 'communities.views.details', name='communities_details'),
-    url(r'^communities/(?P<id\d+>/enroll/$', communities_enroll.as_view(), name='communities_enroll'),
-    url(r'^communities/(?P<id\d+>/manage/$', 'communities.views.manage', name='communities_manage'),
+    url(r'^communities/(?P<id\d+>)/$', 'communities.views.details', name='communities_details'),
+    url(r'^communities/(?P<id\d+>)/enroll/$', communities_enroll.as_view(), name='communities_enroll'),
+    url(r'^communities/(?P<id\d+>)/manage/$', 'communities.views.manage', name='communities_manage'),
 
 
     # Uncomment the admin/doc line below to enable admin documentation:
